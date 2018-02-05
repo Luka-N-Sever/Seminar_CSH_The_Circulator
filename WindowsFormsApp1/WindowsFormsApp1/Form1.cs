@@ -21,8 +21,10 @@ namespace WindowsFormsApp1
         {
             float Mouse_Pos_x = e.X;
             float Mouse_Pos_y = e.Y;
+            float width = 20;
+            float height = 20;
             Pen pen = new Pen(Color.Red);
-            RectangleF circle = new RectangleF(Mouse_Pos_x, Mouse_Pos_y, 20, 20);
+            RectangleF circle = new RectangleF(Mouse_Pos_x-width/2, Mouse_Pos_y-height/2, width, height);
             Graphics g = panel1.CreateGraphics();
             g.DrawEllipse(pen, circle);
         }
