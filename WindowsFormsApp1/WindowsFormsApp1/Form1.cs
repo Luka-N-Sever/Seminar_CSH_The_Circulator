@@ -56,5 +56,10 @@ namespace WindowsFormsApp1
                 g.DrawEllipse(pen, circle);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panel1.Invalidate();
+        }
     }
 }
