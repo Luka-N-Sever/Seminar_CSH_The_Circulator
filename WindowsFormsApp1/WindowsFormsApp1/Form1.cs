@@ -13,11 +13,11 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         Pen pen = new Pen(Color.Red);
-        float width = 10;
-        float height = 10;
+        int width = 10;
+        int height = 10;
         bool is_moving = false;
         Point start;
-        RectangleF circle = new RectangleF(0,0,0,0);
+        Rectangle circle = new Rectangle(0,0,0,0);
 
         public Form1()
         {
@@ -26,12 +26,12 @@ namespace WindowsFormsApp1
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            Graphics g = panel1.CreateGraphics();
+            //Graphics g = panel1.CreateGraphics();
             int Mouse_Pos_x = e.X;
             int Mouse_Pos_y = e.Y;
-
-            Mouse_Pos_x -= (int)width / 2;
-            Mouse_Pos_y -= (int)height / 2;
+            Control control = (Control)sender;
+            /*  Mouse_Pos_x -= (int)width / 2;    //Dont delete these friends
+              Mouse_Pos_y -= (int)height / 2;*/
 
             start = new Point(Mouse_Pos_x, Mouse_Pos_y);
 
@@ -40,31 +40,38 @@ namespace WindowsFormsApp1
                 is_moving = true;
             }
 
-            circle = new RectangleF(start.X, start.Y, width, height);
-            g.DrawEllipse(pen, circle);
+            
+            //circle = new Rectangle(start.X, start.Y, width, height);
+            //g.DrawEllipse(pen, circle); 
             
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            Graphics g = panel1.CreateGraphics();
+           //Graphics g = panel1.CreateGraphics();
             if (is_moving)
             {
-                width = e.X - start.X;
-                height = e.Y - start.Y;
-                circle = new RectangleF(start.X, start.Y, width, height);
-                g.DrawEllipse(pen, circle);
+                Point end = new Point(e.X, e.Y);
+                width = end.X - start.X;
+                height = end.Y - start.Y;
+                circle = new Rectangle(start.X, start.Y, width, height);
+                //g.DrawEllipse(pen, circle);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             panel1.Invalidate();
+            maskedTextBox1.Clear();
+            maskedTextBox2.Clear();
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
+            Graphics g = panel1.CreateGraphics();
             is_moving = false;
+            g.DrawEllipse(pen, circle);
+            //circle = new Rectangle(0, 0, 0, 0);
         }
     }
 }
