@@ -61,5 +61,10 @@ namespace WindowsFormsApp1
         {
             panel1.Invalidate();
         }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            is_moving = false;
+        }
     }
 }
