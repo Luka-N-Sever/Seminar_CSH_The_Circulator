@@ -8,16 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        Pen pen = new Pen(Color.Red);
-        int width = 10;
-        int height = 10;
-        bool is_moving = false;
-        Point start;
-        Rectangle circle = new Rectangle(0,0,0,0);
+        private Rectangle circle;
+        private Point start;
+        private Point end;
 
         public Form1()
         {
@@ -26,52 +24,29 @@ namespace WindowsFormsApp1
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            //Graphics g = panel1.CreateGraphics();
-            int Mouse_Pos_x = e.X;
-            int Mouse_Pos_y = e.Y;
-            Control control = (Control)sender;
-            /*  Mouse_Pos_x -= (int)width / 2;    //Dont delete these friends
-              Mouse_Pos_y -= (int)height / 2;*/
-
-            start = new Point(Mouse_Pos_x, Mouse_Pos_y);
-
-            if (e.Button == MouseButtons.Left)
-            {
-                is_moving = true;
-            }
-
-            
-            //circle = new Rectangle(start.X, start.Y, width, height);
-            //g.DrawEllipse(pen, circle); 
-            
-        }
-
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {
-           //Graphics g = panel1.CreateGraphics();
-            if (is_moving)
-            {
-                Point end = new Point(e.X, e.Y);
-                width = end.X - start.X;
-                height = end.Y - start.Y;
-                circle = new Rectangle(start.X, start.Y, width, height);
-                //g.DrawEllipse(pen, circle);
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            panel1.Invalidate();
             maskedTextBox1.Clear();
             maskedTextBox2.Clear();
+            start.X = e.X;
+            start.Y = e.Y;
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            Graphics g = panel1.CreateGraphics();
-            is_moving = false;
-            g.DrawEllipse(pen, circle);
-            //circle = new Rectangle(0, 0, 0, 0);
+            end.X = e.X;
+            end.Y = e.Y;
+            panel1.Invalidate();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            circle = new Rectangle(start.X, start.Y, end.X - start.X, end.X - start.X); //Same width & height because we dont like ellipses
+            double diameter = Math.Sqrt((end.X - start.X)^2 + (end.Y - start.Y)^2);
+            double radius = diameter / 2;
+            double area = Math.Pow(radius, 2) * Math.PI;
+            double circumference = 2 * radius * Math.PI;
+            maskedTextBox1.AppendText(circumference.ToString());
+            maskedTextBox2.AppendText(area.ToString());
+            e.Graphics.DrawEllipse(new Pen(Color.Red, 1), circle);                     
         }
     }
 }
