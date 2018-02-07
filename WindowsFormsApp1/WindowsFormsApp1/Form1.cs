@@ -39,7 +39,7 @@ namespace WindowsFormsApp1
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            circle = new Rectangle(start.X, start.Y, end.X - start.X, end.X - start.X); //Same width & height because we dont like ellipses
+            circle = new Rectangle(start.X, start.Y, end.X - start.X, end.X - start.X); 
             double diameter = Math.Sqrt((end.X - start.X)^2 + (end.Y - start.Y)^2);
             double radius = diameter / 2;
             double area = Math.Pow(radius, 2) * Math.PI;
