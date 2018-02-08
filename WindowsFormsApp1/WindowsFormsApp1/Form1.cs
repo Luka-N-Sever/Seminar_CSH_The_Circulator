@@ -47,7 +47,7 @@ namespace WindowsFormsApp1
 
             circle = new RectangleF(start.X - height_and_width / 2, start.Y - height_and_width / 2, height_and_width, height_and_width);
             area = Math.Pow(circle.Width / 2, 2) * Math.PI;
-            circumference = 2 * circle.Width / 2 * Math.PI;
+            circumference = 2 * (circle.Width / 2) * Math.PI;
             maskedTextBox1.AppendText(circumference.ToString());
             maskedTextBox2.AppendText(area.ToString());
             g.DrawEllipse(new Pen(Color.Red, 1), circle);
